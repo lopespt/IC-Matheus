@@ -38,9 +38,8 @@ void addPerson(Graph *g, int *total){
     }
     Graph::vertex_descriptor v = add_vertex(*g);
     ((*g)[v]) = (temp)[v0];
-
-
     (*total)++;
+
     cout<<"Tipo: "<<((*g)[v])->getVtype()<<endl;
     cout<<"Nome: "<<((VertexPerson*)((*g)[v]))->getname()<<endl;
     //addLargura();
@@ -50,13 +49,19 @@ void addPerson(Graph *g, int *total){
 }
 Graph::vertex_descriptor* addLargura(Graph *g, int *total){
    //Terminar add person antes ^^^^
+    Graph::vertex_descriptor v0 = add_vertex(temp);
+    (temp)[v0] = new VertexCaracLargura;
+    ((VertexCaracLargura*)((temp)[v0]))->setname();
+    for(int i = 0; i < *total; i++){
+        if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype() && ((VertexCaracLargura*)((temp)[v0]))->getlargura() == ((VertexCaracLargura*)((*g)[i]))->getlargura() ){
+            return ((*g)[i]);
+        }
+    }
     Graph::vertex_descriptor v = add_vertex(*g);
-    (*g)[v] = new VertexCaracLargura;
-    ((VertexCaracLargura*)((*g)[v]))->setLargura();
-    *total++;
+    ((*g)[v]) = (temp)[v0];
+    (*total)++;
 
-    cout<<"Tipo: "<<((*g)[v])->getVtype()<<endl;
-    system("pause");
+
     return &v;
 }
 
