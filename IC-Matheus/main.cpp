@@ -9,7 +9,6 @@
 #include "VertexCaracPeso.h"
 #include "VertexCaracLargura.h"
 #include "VertexCaracAltura.h"
-#include <set>
 
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, Vertex*, Edge > Graph;
 using namespace boost;
@@ -23,8 +22,6 @@ using namespace std;
 
 void addPerson(Graph *g, int *total){
     Graph temp;
-    cout<<"Total: "<<*total<<endl;
-
     Graph::vertex_descriptor v0 = add_vertex(temp);
     (temp)[v0] = new VertexPerson;
     ((VertexPerson*)((temp)[v0]))->setname();
@@ -47,11 +44,13 @@ void addPerson(Graph *g, int *total){
     //addAltura();
     system("pause");
 }
-Graph::vertex_descriptor* addLargura(Graph *g, int *total){
-   //Terminar add person antes ^^^^
+Vertex* addLargura(Graph *g, int *total){
+
+    Graph temp;
+    cout<<*total<<endl;
     Graph::vertex_descriptor v0 = add_vertex(temp);
     (temp)[v0] = new VertexCaracLargura;
-    ((VertexCaracLargura*)((temp)[v0]))->setname();
+    ((VertexCaracLargura*)((temp)[v0]))->setLargura();
     for(int i = 0; i < *total; i++){
         if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype() && ((VertexCaracLargura*)((temp)[v0]))->getlargura() == ((VertexCaracLargura*)((*g)[i]))->getlargura() ){
             return ((*g)[i]);
@@ -62,7 +61,7 @@ Graph::vertex_descriptor* addLargura(Graph *g, int *total){
     (*total)++;
 
 
-    return &v;
+    return ((*g)[v]);
 }
 
 int main(int argc, char *argv[])
@@ -90,8 +89,9 @@ int main(int argc, char *argv[])
         switch (i)
         {
         case 0:
-            addPerson(&g, &total);
-            //addLargura(&g, &total);
+            //addPerson(&g, &total);
+            addLargura(&g, &total);
+
 
             break;
 
