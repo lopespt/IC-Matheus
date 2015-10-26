@@ -1,6 +1,5 @@
 #include "Edge.h"
 
-
 void Edge::plus()
 {
 	nivel++;

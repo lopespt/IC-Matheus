@@ -20,17 +20,59 @@ using namespace std;
  * -limapa os prints lokos que tem;
  */
 
+int addLargura(Graph *g, int *total){
+
+    Graph temp;
+    Graph::vertex_descriptor v0 = add_vertex(temp);
+    (temp)[v0] = new VertexCaracLargura;
+    ((VertexCaracLargura*)((temp)[v0]))->setLargura();
+    fflush(stdin);
+
+     for(int i = 0; i < (*total); i++){
+
+        try{
+            ((*g)[i])->getVtype();
+        }catch(int i){
+            i++;
+        }
+
+        if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype()){
+
+                if(((VertexCaracLargura*)((temp)[v0]))->getlargura() == ((VertexCaracLargura*)((*g)[i]))->getlargura() ){
+
+                    return i;
+
+            }
+        }
+    }
+
+    Graph::vertex_descriptor v = add_vertex(*g);
+    ((*g)[v]) = (temp)[v0];
+    (*total)++;
+    cout<<"\n4\n";
+    return (*total);
+}
+
 void addPerson(Graph *g, int *total){
     Graph temp;
     Graph::vertex_descriptor v0 = add_vertex(temp);
     (temp)[v0] = new VertexPerson;
     ((VertexPerson*)((temp)[v0]))->setname();
-    for(int i = 0; i < *total; i++){
-        if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype() && ((VertexPerson*)((temp)[v0]))->getname() == ((VertexPerson*)((*g)[i]))->getname() ){
-            system("cls");
-            cout<<"Pessoa já existente!Tente um nome diferente...\n";
-            addPerson(g,total);
-            return;
+     fflush(stdin);
+    for(int i = 0; i < (*total); i++){
+        try{
+            ((*g)[i])->getVtype();
+        }catch(int i){
+            i++;
+        }
+
+        if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype()){
+            if (((VertexPerson*)((temp)[v0]))->getname() == ((VertexPerson*)((*g)[i]))->getname() ){
+                system("cls");
+                cout<<"Pessoa já existente!Tente um nome diferente...\n";
+                addPerson(g,total);
+                return;
+            }
         }
     }
     Graph::vertex_descriptor v = add_vertex(*g);
@@ -39,47 +81,19 @@ void addPerson(Graph *g, int *total){
 
     cout<<"Tipo: "<<((*g)[v])->getVtype()<<endl;
     cout<<"Nome: "<<((VertexPerson*)((*g)[v]))->getname()<<endl;
-    //addLargura();
+    Edge e0;
+    int ind = addLargura(g,total);
+    boost::add_edge(ind, v, e0, *g);
     //addPeso();
     //addAltura();
-    system("pause");
-}
-Vertex* addLargura(Graph *g, int *total){
-
-    Graph temp;
-    cout<<*total<<endl;
-    Graph::vertex_descriptor v0 = add_vertex(temp);
-    (temp)[v0] = new VertexCaracLargura;
-    ((VertexCaracLargura*)((temp)[v0]))->setLargura();
-    for(int i = 0; i < *total; i++){
-        if(((temp)[v0])->getVtype() == ((*g)[i])->getVtype() && ((VertexCaracLargura*)((temp)[v0]))->getlargura() == ((VertexCaracLargura*)((*g)[i]))->getlargura() ){
-            return ((*g)[i]);
-        }
-    }
-    Graph::vertex_descriptor v = add_vertex(*g);
-    ((*g)[v]) = (temp)[v0];
-    (*total)++;
-
-
-    return ((*g)[v]);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     Graph g;
     int total = 0;
 
     int j = 1;
-
-  /*  Graph::vertex_descriptor v = add_vertex(g);
-    Graph::vertex_descriptor v0 = add_vertex(g);
-    g[v] = new VertexPerson;
-    g[v0] = new VertexPerson;
-    VertexPerson *a = (VertexPerson*)g[v];
-    a->setname();
-    cout<< a->getname();
-    system("pause");*/
-
     while (j != 0) {
         cout << "0-adc pessoa.\n1-Buscar pessoas por caracteristicas\n2-Buscar Pessoas\n3-Sair\n";
 
@@ -90,8 +104,9 @@ int main(int argc, char *argv[])
         {
         case 0:
             //addPerson(&g, &total);
-            addLargura(&g, &total);
-
+            addPerson(&g, &total);
+            break;
+        case 1:
 
             break;
 

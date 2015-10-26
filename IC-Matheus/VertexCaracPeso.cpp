@@ -15,9 +15,9 @@ bool VertexCaracPeso::operator>(VertexCaracPeso a)
 		return false;
 }
 
-bool VertexCaracPeso::operator<(VertexCaracPeso a)
+bool VertexCaracPeso::operator==(VertexCaracPeso a)
 {
-	if (Peso < a.Peso)
+    if (Peso == a.Peso)
 		return true;
 	else
 		return false;

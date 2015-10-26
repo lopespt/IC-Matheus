@@ -8,7 +8,7 @@ public:
 	float getAltura();
     void setAltura();
 	bool operator>(VertexCaracAltura a);
-    bool operator<(VertexCaracAltura a);
+    bool operator==(VertexCaracAltura a);
 	VertexCaracAltura();
 	~VertexCaracAltura();
 };

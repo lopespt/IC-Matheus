@@ -9,7 +9,7 @@ void VertexPerson::setname()
 	name = temp;
 }
 
-std::string VertexPerson::getname() const
+std::string VertexPerson::getname()
 {
 	return name;
 }
@@ -22,9 +22,9 @@ bool VertexPerson::operator>(VertexPerson a)
 		return false;
 }
 
-bool VertexPerson::operator<(VertexPerson a) const
+bool VertexPerson::operator==(VertexPerson a)
 {
-	if (name < a.getname())
+    if (name == a.getname())
 		return true;
 	else
 		return false;

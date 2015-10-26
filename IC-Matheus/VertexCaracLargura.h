@@ -8,7 +8,7 @@ public:
 	float getlargura();
     void setLargura();
 	bool operator>(VertexCaracLargura a);
-    bool operator<(VertexCaracLargura a);
+    bool operator==(VertexCaracLargura a);
 	VertexCaracLargura();
 	~VertexCaracLargura();
 };

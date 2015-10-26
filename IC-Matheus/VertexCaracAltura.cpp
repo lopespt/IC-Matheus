@@ -16,9 +16,9 @@ bool VertexCaracAltura::operator>(VertexCaracAltura a)
 		return false;
 }
 
-bool VertexCaracAltura::operator<(VertexCaracAltura a)
+bool VertexCaracAltura::operator==(VertexCaracAltura a)
 {
-	if (altura < a.altura)
+    if (altura == a.altura)
 		return true;
 	else
 		return false;

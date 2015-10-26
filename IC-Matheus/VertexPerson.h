@@ -7,9 +7,9 @@ private:
 
 public:
 	void setname() ;
-	std::string getname() const;
+    std::string getname();
 	bool operator>(VertexPerson a);
-	bool operator<(VertexPerson a) const;
+    bool operator==(VertexPerson a);
 	VertexPerson();
 	~VertexPerson();
 };

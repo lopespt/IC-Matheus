@@ -14,9 +14,9 @@ bool VertexCaracLargura::operator>(VertexCaracLargura a)
 		return false;
 }
 
-bool VertexCaracLargura::operator<(VertexCaracLargura a)
+bool VertexCaracLargura::operator==(VertexCaracLargura a)
 {
-	if (largura < a.largura)
+    if (largura == a.largura)
 		return true;
 	else
 		return false;
