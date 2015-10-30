@@ -5,7 +5,6 @@
 #define ALT 1
 #define LARG 2
 #define PESO 3
-#define EDGE -1
 using namespace std;
 class Vertex
 {

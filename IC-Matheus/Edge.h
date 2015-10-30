@@ -5,7 +5,9 @@ class Edge
 {
 private:
 	int nivel;
+    int Vtype;
 public:
+    int getVtype();
     void plus();
 	int getnivel();
 	Edge();

@@ -9,10 +9,14 @@ int Edge::getnivel()
 {
 	return nivel;
 }
+int Edge::getVtype(){
+    return Vtype;
+}
 
 Edge::Edge()
 {
 	nivel = 1;
+    Vtype = -1;
 }
 
 
