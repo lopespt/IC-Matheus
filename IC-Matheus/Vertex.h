@@ -4,7 +4,7 @@
 #define PERSON 0
 #define ALT 1
 #define LARG 2
-#define PESO_FOO 3
+#define PESO 3
 using namespace std;
 class Vertex
 {

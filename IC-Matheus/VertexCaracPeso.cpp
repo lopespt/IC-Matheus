@@ -25,7 +25,7 @@ bool VertexCaracPeso::operator==(VertexCaracPeso a)
 
 VertexCaracPeso::VertexCaracPeso()
 {
-    setVtype(PESO_FOO);
+    setVtype(PESO);
 }
 void VertexCaracPeso::setPeso(){
 	float pesotemp;

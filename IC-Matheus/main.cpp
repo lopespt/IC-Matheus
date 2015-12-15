@@ -2,12 +2,15 @@
 #define PERSON 0
 #define ALT 1
 #define LARG 2
-#define PESO_FOO 3
+#define PESO 3
 
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+#include "pprob.h"
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/lookup_edge.hpp>
 #include <boost/graph/adjacency_iterator.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/undirected_graph.hpp>
@@ -54,7 +57,7 @@ void searchperson(Graph *g, int *total){
                      int temp = ((*g)[ind])->getVtype();
                      cout<<temp <<"  lalalal\n\n";
                       switch (temp){
-                        case PESO_FOO:
+                        case PESO:
                         std::cout <<"PESO DE "<<name<<": "<< ((VertexCaracPeso*)((*g)[ind]))->getPeso() <<endl;
                         break;
 
@@ -77,6 +80,201 @@ void searchperson(Graph *g, int *total){
     getchar();
     system("pause");
 
+}
+
+int searchbycarac(Graph *g, int *total){
+    vector<PProb> probs;
+    int totalCarac = 0;
+    int controle = 0;
+    float Carac = 0;
+
+    cout<<"\nDigite o Altura";
+    cin>>Carac;
+
+    for(int i = 0; i < (*total); i++){
+        try{
+            ((*g)[i])->getVtype();
+        }catch(int i){
+            i++;
+        }
+        if(((*g)[i])->getVtype()== ALT){
+            if (((VertexCaracAltura*)((*g)[i]))->getAltura() == Carac){
+
+                typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+                 IndexMap index = get(boost::vertex_index, *g);
+
+                 typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+
+                 std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(vertex(i,*g), *g);
+
+                    for(; neighbors.first != neighbors.second; neighbors.first++)
+                    {
+                         int ind = index[*neighbors.first];
+
+                         PProb x;
+                         x.setName(((VertexPerson*)((*g)[ind]))->getname());
+                         Graph::edge_descriptor edgeA;
+                         edgeA = boost::edge(*((Graph::vertex_descriptor*)((*g)[i])), *((Graph::vertex_descriptor*)((*g)[ind])), (*g)).first;
+                         x.setpAlt(((*g)[edgeA]).getnivel());
+                         totalCarac += x.getpAlt();
+                         probs.push_back(x);
+                }
+            }
+            }
+
+    }
+
+    for(std::vector<PProb>::iterator it = probs.begin() ; it != probs.end(); ++it){
+         if(it->getpAlt()!= 0){
+            float probabilidade = it->getpAlt();
+           probabilidade = probabilidade/totalCarac;
+           it->setpAlt(probabilidade);
+         }
+    }
+    Carac = 0;
+    totalCarac = 0;
+    cout<<"\nDigite o Largura";
+    cin>>Carac;
+
+    for(int i = 0; i < (*total); i++){
+        try{
+            ((*g)[i])->getVtype();
+        }catch(int i){
+            i++;
+        }
+        if(((*g)[i])->getVtype()== LARG){
+            if (((VertexCaracLargura*)((*g)[i]))->getlargura() == Carac){
+                typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+                 IndexMap index = get(boost::vertex_index, *g);
+
+                 typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+
+                 std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(vertex(i,*g), *g);
+
+                    for(; neighbors.first != neighbors.second; neighbors.first++)
+                    {
+                         int ind = index[*neighbors.first];
+                         std::vector<PProb>::iterator it;
+                         for( it = probs.begin() ; it != probs.end(); ++it){
+                            if( it->getName() == ((VertexPerson*)((*g)[ind]))->getname()){
+                                break;
+                            }
+                            if( it + 1 == probs.end() ){
+                            PProb x;
+                            x.setName(((VertexPerson*)((*g)[ind]))->getname());
+                            Graph::edge_descriptor edgeA;
+                            edgeA = boost::edge(*((Graph::vertex_descriptor*)((*g)[i])), *((Graph::vertex_descriptor*)((*g)[ind])), (*g)).first;
+                            x.setpLarg(((*g)[edgeA]).getnivel());
+                            totalCarac += x.getpLarg();
+                            probs.push_back(x);
+                            controle = 1;
+                            break;
+                            }
+                     }
+                     if(controle!=1){
+                         Graph::edge_descriptor edgeA;
+                         edgeA = boost::edge(*((Graph::vertex_descriptor*)((*g)[i])), *((Graph::vertex_descriptor*)((*g)[ind])), (*g)).first;
+                         it->setpLarg(((*g)[edgeA]).getnivel());
+                         totalCarac += it->getpLarg();
+                     }
+                     controle = 0;
+
+
+                }
+            }
+            }
+
+    }
+    for(std::vector<PProb>::iterator it = probs.begin() ; it != probs.end(); ++it){
+        if(it->getpLarg()!= 0){
+            float probabilidade = it->getpLarg();
+           probabilidade = probabilidade/totalCarac;
+           it->setpLarg(probabilidade);
+        }
+    }
+
+    Carac = 0;
+    totalCarac = 0;
+    cout<<"\nDigite o Peso";
+    cin>>Carac;
+
+    for(int i = 0; i < (*total); i++){
+        try{
+            ((*g)[i])->getVtype();
+        }catch(int i){
+            i++;
+        }
+        if(((*g)[i])->getVtype()== PESO ){
+            if (((VertexCaracPeso*)((*g)[i]))->getPeso() == Carac){
+
+                typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+                 IndexMap index = get(boost::vertex_index, *g);
+
+                 typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+
+                 std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(vertex(i,*g), *g);
+
+                    for(; neighbors.first != neighbors.second; neighbors.first++)
+                    {
+                         int ind = index[*neighbors.first];
+                         std::vector<PProb>::iterator it;
+                         for( it = probs.begin() ; it != probs.end(); ++it){
+                            if( it->getName() == ((VertexPerson*)((*g)[ind]))->getname()){
+                                break;
+                            }
+                            if( it + 1 == probs.end() ){
+                            PProb x;
+                            x.setName(((VertexPerson*)((*g)[ind]))->getname());
+                            Graph::edge_descriptor edgeA;
+                            edgeA = boost::edge(*((Graph::vertex_descriptor*)((*g)[i])), *((Graph::vertex_descriptor*)((*g)[ind])), (*g)).first;
+                            x.setpPeso(((*g)[edgeA]).getnivel());
+                            totalCarac += x.getpPeso();
+                            probs.push_back(x);
+                            controle = 1;
+                            break;
+                            }
+                     }
+                     if(controle != 1 ){
+                     Graph::edge_descriptor edgeA;
+                     edgeA = boost::edge(*((Graph::vertex_descriptor*)((*g)[i])), *((Graph::vertex_descriptor*)((*g)[ind])), (*g)).first;
+                     it->setpPeso(((*g)[edgeA]).getnivel());
+                     totalCarac += it->getpPeso();
+                     }
+                     controle = 0;
+
+                }
+            }
+            }
+
+            }
+    for(std::vector<PProb>::iterator it = probs.begin() ; it != probs.end(); ++it){
+        if(it->getpPeso()!= 0){
+           float probabilidade = it->getpPeso();
+           probabilidade = probabilidade/totalCarac;
+           it->setpPeso(probabilidade);
+        }
+    }
+    float pgeraltotal = 0;
+    for(std::vector<PProb>::iterator it = probs.begin() ; it != probs.end(); ++it){
+
+        pgeraltotal += 1 - ( (1 - it->getpAlt() )*(1 - it->getpLarg())*(1 - it->getpPeso()) );
+
+    }
+
+    for(std::vector<PProb>::iterator it = probs.begin() ; it != probs.end(); ++it){
+
+        cout<<"Nome: "<<it->getName()<<endl;
+        cout<<"Probabilidade da Altura: "<<it->getpAlt()<<endl;
+        cout<<"Probabilidade da Largura: "<<it->getpLarg()<<endl;
+        cout<<"Probabilidade da Peso: "<<it->getpPeso()<<endl;
+        float pgeral = 0;
+        pgeral = (1 - ( (1 - it->getpAlt() )*(1 - it->getpLarg())*(1 - it->getpPeso()) ))/pgeraltotal;
+        cout<<"Probabilidade Geral: "<<pgeral<<endl<<endl;
+
+    }
+
+    system("pause");
+    return 0;
 }
 
 int addLargura(Graph *g, int *total){
@@ -199,14 +397,17 @@ void addPerson(Graph *g, int *total){
     (*total)++;
 
     Edge e0, e1, e2;
-    int ind = addLargura(g,total);
+    int ind = addAltura(g,total);
     boost::add_edge(ind, v, e0, *g);
-    ind = addAltura(g,total);
+    ind = addLargura(g,total);
     boost::add_edge(ind, v, e2, *g);
     ind = addPeso(g,total);
     boost::add_edge(ind, v, e1, *g);
 
+
 }
+
+
 
 int main()
 {
@@ -235,6 +436,9 @@ int main()
         case 3:
             j = 0;
             break;
+
+        case 4:
+            searchbycarac(&g, &total);
 
         default:
             break;

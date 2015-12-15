@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     VertexCaracAltura.cpp \
     VertexCaracLargura.cpp \
     VertexCaracPeso.cpp \
-    VertexPerson.cpp
+    VertexPerson.cpp \
+    pprob.cpp
 
 INCLUDEPATH += C:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0
 LIBS += -LC:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0/stage/lib/
@@ -25,4 +26,5 @@ HEADERS += \
     VertexCaracAltura.h \
     VertexCaracLargura.h \
     VertexCaracPeso.h \
-    VertexPerson.h
+    VertexPerson.h \
+    pprob.h
