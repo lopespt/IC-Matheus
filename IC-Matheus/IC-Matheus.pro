@@ -16,9 +16,17 @@ SOURCES += main.cpp \
     VertexPerson.cpp \
     pprob.cpp
 
-INCLUDEPATH += C:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0
-LIBS += -LC:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0/stage/lib/
-LIBS += -llibboost_filesystem-vc150-mt-gd-1_59
+
+if(linux-g++*|macx-g++*):CONFIG(debug, debug|release) {
+    INCLUDEPATH += /opt/local/include/
+    LIBS += -L/opt/local/lib/
+    LIBS += -lboost_filesystem-mt
+} else {
+    INCLUDEPATH += C:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0
+    LIBS += -LC:\Users\Matheus\Desktop\Programacaoeetc\boost_1_59_0/stage/lib/
+    LIBS += -llibboost_filesystem-vc150-mt-gd-1_59
+}
+
 
 HEADERS += \
     Edge.h \
